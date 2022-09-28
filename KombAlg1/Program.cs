@@ -91,16 +91,18 @@ namespace KombAlg1
 
             var sortedEdges = edges.OrderBy(x => x.Cost).ToArray();
             var usedEdges = new List<Edge>();
-            //система непересекающихся множеств
+            var set = pointToNodeDict.Values.Select(x => new HashSet<int>() { x.Number }).ToArray();
 
             for (int i = 0; i < sortedEdges.Length; i++)
             {
                 var thisEdge = sortedEdges[i];
-                if ()
+                if (set[thisEdge.Start.Number].Contains(thisEdge.End.Number))
                 {
                     continue;
                 }
 
+                set[thisEdge.Start.Number].UnionWith(set[thisEdge.End.Number]);
+                set[thisEdge.End.Number] = set[thisEdge.Start.Number];
                 usedEdges.Add(thisEdge);
             }
 
