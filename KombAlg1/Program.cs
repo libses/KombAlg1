@@ -96,10 +96,12 @@ namespace KombAlg1
             for (int i = 0; i < sortedEdges.Length; i++)
             {
                 var thisEdge = sortedEdges[i];
-                if (set[thisEdge.Start.Number].Contains(thisEdge.End.Number))
+                if (set[thisEdge.Start.Number].Overlaps(set[thisEdge.End.Number]))
                 {
                     continue;
                 }
+
+
 
                 set[thisEdge.Start.Number].UnionWith(set[thisEdge.End.Number]);
                 set[thisEdge.End.Number] = set[thisEdge.Start.Number];
@@ -112,12 +114,14 @@ namespace KombAlg1
                 list.Add(new List<int>());
             }
 
+            var sum = 0;
             foreach (var edge in usedEdges)
             {
                 var n1 = edge.Start.Number;
                 var n2 = edge.End.Number;
                 list[n1].Add(n2);
                 list[n2].Add(n1);
+                sum += edge.Cost;
             }
 
             Console.WriteLine();
@@ -125,6 +129,8 @@ namespace KombAlg1
             {
                 Console.WriteLine(string.Join(" ", l.Select(x => x + 1).OrderBy(x => x)) + " 0");
             }
+
+            Console.WriteLine(sum);
         }
     }
 }
